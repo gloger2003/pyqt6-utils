@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import Callable, TypeAlias
+from typing import TYPE_CHECKING, Callable, TypeAlias
 
 from PyQt6.QtWidgets import QLineEdit, QSpinBox, QWidget
+
 
 from .form import Form, FormManager, FormValueType
 

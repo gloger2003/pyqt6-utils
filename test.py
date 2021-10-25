@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget
-from pyqt6_forms.form import Form, FormManager
-from pyqt6_forms.forms import QIntSpinBoxForm, QLineEditForm
+from src.pyqt6_forms.form import Form, FormManager
+from src.pyqt6_forms.forms import QIntSpinBoxForm, QLineEditForm
 
 
 class Window(QMainWindow):

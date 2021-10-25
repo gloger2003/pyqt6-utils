@@ -1,7 +1,5 @@
 from __future__ import annotations
-from typing import Any, Callable, TypeAlias, Union
-
-from pyqt6_forms.forms import QLineEditForm
+from typing import TYPE_CHECKING, Any, Callable, TypeAlias, Union
 
 
 class Form:
