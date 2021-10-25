@@ -2,22 +2,25 @@
 
 How to install:
 <p> 
-```
-    pip install pyqt6_forms
-    pip3 install pyqt6_forms
-```
+<pre>
+<code>
+pip install pyqt6_forms
+pip3 install pyqt6_forms
+</code>
+</pre>
 </p>
 
 How to use:
 <p> 
-```python
-    from pyqt6_forms.forms import QLineEditForm
-    ....
-    form = QLineEditForm(form_name='username', parent=QWidget |QHBoxLayout)
-    ...
-    user_input_username = form.get_value()
-```
-</p>
+<pre>
+<code>
+from pyqt6_forms.forms import QLineEditForm
+....
+form = QLineEditForm(form_name='username', parent=QWidget |QHBoxLayout)
+...
+user_input_username = form.get_value()
+</code>
+</pre>
 
 
 # Road map (What will be added)
