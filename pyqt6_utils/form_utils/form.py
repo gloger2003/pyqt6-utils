@@ -1,9 +1,12 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Callable, TypeAlias, Union
 
+from PyQt6.QtWidgets import QWidget
+
 
 class Form:
     """ Базовая форма для PyQt6-input-виджетов """
+
     def __init__(self, form_name: str,
                  default_value='',
                  converter: Callable = str,
@@ -57,11 +60,14 @@ class Form:
         """ Удаляет форму из FormManager """
         self._form_manager.remove_form(self)
 
+    def qwidget(self) -> QWidget:
+        return self._qwidget
+
 
 class FormManager:
     def __init__(self) -> None:
         self.__forms_dict: dict[str, Form] = {}
-        self.__forms_list: list[str] = []
+        self.__form_names_list: list[str] = []
 
     def __getitem__(self, form_name: str) -> Form:
         return self.__forms_dict[form_name]
@@ -74,7 +80,7 @@ class FormManager:
         if isinstance(form, Form):
             self.__forms_dict[form.form_name()] = form
             self.__dict__[form.form_name()] = form
-            self.__forms_list.append(form.form_name())
+            self.__form_names_list.append(form.form_name())
             form._form_manager = self
         else:
             raise TypeError(f'Must be {Form}, not {type(form)} | '
@@ -97,16 +103,22 @@ class FormManager:
         removed_form: Form = self.__forms_dict.pop(form_name, None)
         if removed_form:
             self.__dict__.pop(form_name)
-            self.__forms_list.remove(removed_form.form_name())
+            self.__form_names_list.remove(removed_form.form_name())
             removed_form.remove_form_manager()
         return removed_form
+
+    def get_form_value(self, form_name: str) -> FormValueType:
+        return self.__getitem__(form_name).get_value()
+
+    def get_form(self, form_name: str) -> Form:
+        return self.__getitem__(form_name)
 
     def forms_to_dict(self) -> dict[str, Form]:
         """ Возвращаем словарь `{form_name: Form}`"""
         return self.__forms_dict.copy()
 
-    def update_form_value(self, form_or_name: FormOrNameType,
-                          value: FormValueType):
+    def set_form_value(self, form_or_name: FormOrNameType,
+                       value: FormValueType):
         """ Обновляет значение указанной формы """
         try:
             if isinstance(form_or_name, Form):
@@ -120,10 +132,28 @@ class FormManager:
             # !!!
             raise e
 
-    def update_form_values(self, form_value_dict: dict[str, FormValueType]):
+    def set_form_values(self, form_value_dict: dict[str, FormValueType]):
         """ Обновляет значение указанных в словаре форм """
         for form_name, value in form_value_dict.items():
-            self.update_form_value(form_name, value)
+            self.set_form_value(form_name, value)
+
+    def update_values_from_object(self, obj: object):
+        for name in self.__form_names_list:
+            self.set_form_value(name, obj.get_form_value(name))
+
+    def update_object_values(self, obj: object):
+        names = obj.names()
+        for name in names:
+            obj.set_form_value(name, self.get_form_value(name))
+
+    def execute_qwidget_method(self,
+                               form_name: str,
+                               method_name: str,
+                               method_args=(),
+                               method_kwargs={}):
+        form = self.get_form(form_name)
+        return getattr(
+            form.qwidget(), method_name)(*method_args, **method_kwargs)
 
 
 FormValueType: TypeAlias = str | int | float | bool | object

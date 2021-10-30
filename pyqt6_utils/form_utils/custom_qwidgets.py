@@ -38,8 +38,9 @@ class QFileInputButton(QPushButton):
         self.set_filename(filename)
         return filename
 
-    def clear_filename(self):
+    def clear_file_data(self):
         self.__filename = self.__basename = None
+        self.setText('')
 
     def filename(self) -> str:
         return self.__filename
