@@ -1,5 +1,6 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any, Callable, TypeAlias, Union
+
+from typing import Any, Callable, TypeAlias
 
 from PyQt6.QtWidgets import QWidget
 

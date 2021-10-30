@@ -1,8 +1,9 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget
+
 from pyqt6_utils.form_utils.custom_qwidgets import QFileInputButton
 from pyqt6_utils.form_utils.form import Form, FormManager
-from pyqt6_utils.form_utils.forms import (
-    QFileInputButtonForm, QIntSpinBoxForm, QLineEditForm)
+from pyqt6_utils.form_utils.forms import (QFileInputButtonForm,
+                                          QIntSpinBoxForm, QLineEditForm)
 
 
 class Window(QMainWindow):

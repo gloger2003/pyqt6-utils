@@ -1,7 +1,7 @@
 import os
-from PyQt6.QtWidgets import (QApplication, QLabel,
-                             QPushButton, QWidget,
-                             QFileDialog)
+
+from PyQt6.QtWidgets import (QApplication, QFileDialog, QLabel, QPushButton,
+                             QWidget)
 
 
 class QFileInputButton(QPushButton):
